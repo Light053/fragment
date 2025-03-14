@@ -1,0 +1,17 @@
+.text-intro {
+  text-align: center;
+  padding-top: 30px;
+  font-weight: bold;
+}
+
+.text-intro-title {
+  font-size: 28px;
+  color: #fff;
+  line-height: 20px;
+}
+
+.text-intro-description {
+  font-size: 16px;
+  color: #cbd7e5b3;
+  font-weight: 500;
+}
