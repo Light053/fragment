@@ -20,9 +20,7 @@ import { changeTab } from "../store/MainSlice";
 import { useNavigate } from "react-router-dom";
 import { HeaderSidebar } from "./HeaderSidebar";
 
-export const Navbar: React.FC<{ onOpenSidebar: () => void }> = ({
-  onOpenSidebar,
-}) => {
+export const Navbar = () => {
   const [value, setValue] = React.useState<"usernames" | "numbers">(
     "usernames"
   );
@@ -44,14 +42,19 @@ export const Navbar: React.FC<{ onOpenSidebar: () => void }> = ({
 
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: "#212a33e6" }}>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "#212a33e6", boxShadow: "none" }}
+      >
         <Toolbar
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: `${isMobile ? "flex-start" : "center"}`,
+            minHeight: "46px",
+            paddingTop: `${isMobile ? "8px" : "0"}`,
+            marginBottom: isMobile ? 0 : -1,
             gap: 1,
-            paddingY: 1,
           }}
         >
           <Box
