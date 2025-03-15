@@ -70,7 +70,7 @@ export const Navbar = () => {
                 alignItems: "center",
                 gap: 1,
                 justifyContent: "flex-start",
-                minWidth: "calc((100vw - 720px) / 2)",
+                minWidth: "calc((100vw - 760px) / 2)",
                 marginLeft: `${isMobile ? "-100px" : "0"}`,
               }}
             >
@@ -81,7 +81,10 @@ export const Navbar = () => {
                 alt="logoIcon"
               />
               <Typography
-                sx={{ fontSize: `${isMobile ? "16px" : "20px"}` }}
+                sx={{
+                  fontSize: `${isMobile ? "16px" : "20px"}`,
+                  color: "#fff",
+                }}
                 component="div"
               >
                 FRAGMENT
@@ -106,7 +109,7 @@ export const Navbar = () => {
                   value="usernames"
                   sx={{
                     fontWeight: "bold",
-                    color: "#cbd7e5b3",
+                    color: (theme) => theme.palette.secondary.main,
                     textTransform: "none",
                     "&.Mui-selected": { color: "#fff" },
                     transition: "color 0.3s ease-in-out",

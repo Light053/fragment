@@ -12,9 +12,10 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#1976d2",
+      contrastText: "#4db2ff",
     },
     secondary: {
-      main: "#dc004e",
+      main: "#cbd7e5b3",
     },
   },
   shape: {
@@ -36,7 +37,7 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <BrowserRouter>
-          <Navbar onOpenSidebar={() => {}} />
+          <Navbar />
           <App />
         </BrowserRouter>
       </Provider>

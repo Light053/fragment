@@ -12,9 +12,11 @@ export const TextIntro = () => {
         Buy and Sell Usernames
       </Typography>
       <Typography
-        sx={{ fontWeight: "semibold" }}
+        sx={{
+          fontWeight: "semibold",
+          color: (theme) => theme.palette.secondary.main,
+        }}
         variant="body1"
-        color="rgba(203, 215, 229, 0.7)"
         fontWeight={500}
       >
         Secure your name with blockchain in an ecosystem of 950+ million users
