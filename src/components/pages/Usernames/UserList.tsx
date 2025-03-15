@@ -1,4 +1,10 @@
-import { Box, List, ListSubheader, useTheme } from "@mui/material";
+import {
+  Box,
+  List,
+  ListSubheader,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useEffect, useState } from "react";
 import { UserListItem } from "./UserListItem";
@@ -10,8 +16,8 @@ export const UserList = () => {
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((state) => state.main);
   const theme = useTheme();
-  const slots = useAppSelector((state) => state.main.slots);
-
+  const { slots, nameFilter } = useAppSelector((state) => state.main);
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
   const [filterBySold, setFilterBySold] = useState<string>("on_auction");
   const [filterByPrice, setFilterByPrice] = useState<string>("low");
 
@@ -24,7 +30,8 @@ export const UserList = () => {
   const filteredSlots = filteringBySaleAndPrice(
     slots,
     filterBySold,
-    filterByPrice
+    filterByPrice,
+    nameFilter
   );
 
   return (
@@ -41,10 +48,15 @@ export const UserList = () => {
               fontWeight: "bold",
               px: 2,
               backgroundColor: "#293440",
+              borderTopRightRadius: "10px",
+              borderTopLeftRadius: "10px",
             }}
           >
             <Box
-              sx={{ flex: 1, color: (theme) => theme.palette.secondary.main }}
+              sx={{
+                flex: 1,
+                color: (theme) => theme.palette.secondary.main,
+              }}
             >
               Username
             </Box>
@@ -52,16 +64,22 @@ export const UserList = () => {
               sx={{
                 flex: 1,
                 color: (theme) => theme.palette.secondary.main,
-                [theme.breakpoints.down("md")]: { display: "none" },
+                paddingLeft: {
+                  xs: 0,
+                  sm: "clamp(0px, 5vw, 56px)",
+                  md: "clamp(0px, calc(10vw - 20px), 56px)",
+                },
               }}
             >
               Minimum bid
             </Box>
-            <Box
-              sx={{ flex: 1, color: (theme) => theme.palette.secondary.main }}
-            >
-              Auction ends in
-            </Box>
+            {isMdUp && (
+              <Box
+                sx={{ flex: 1, color: (theme) => theme.palette.secondary.main }}
+              >
+                Auction ends in
+              </Box>
+            )}
           </ListSubheader>
         }
       >
@@ -73,6 +91,7 @@ export const UserList = () => {
             usdEquivalent={slot.usdEquivalent}
             auctionEnds={slot.auctionEnds}
             endedAt={slot.endedAt}
+            auctionEndDate={slot.auctionEndDate}
           />
         ))}
       </List>

@@ -11,6 +11,7 @@ export interface Slot {
   usdEquivalent: string;
   auctionEnds: string;
   endedAt: string | null;
+  auctionEndDate: string;
 }
 
 export interface MainState {
@@ -19,6 +20,7 @@ export interface MainState {
   slots: Slot[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  nameFilter: string;
 }
 
 export const initialState: MainState = {
@@ -27,4 +29,5 @@ export const initialState: MainState = {
   slots: [],
   status: "idle",
   error: null,
+  nameFilter: "",
 };

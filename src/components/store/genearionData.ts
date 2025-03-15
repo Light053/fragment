@@ -6,8 +6,25 @@ export const generateAuctionData = (user: User): Slot => {
 
   const isEnded = Math.random() < 0.2;
 
-  let auctionEnds;
+  let auctionEnds: string;
   let endedAt: string | null = null;
+  let auctionEndDate: string;
+
+  const formatDate = (date: Date): string => {
+    return date
+      .toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+      .replace(",", "")
+      .replace(" ", " ")
+      .replace(" at", " at")
+      .replace(/(\d{2}:\d{2})$/, "at $1");
+  };
 
   if (isEnded) {
     auctionEnds = "Sold";
@@ -16,27 +33,24 @@ export const generateAuctionData = (user: User): Slot => {
     const date = new Date();
     date.setDate(date.getDate() - pastDays);
 
-    const options: Intl.DateTimeFormatOptions = {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    };
-    endedAt = date
-      .toLocaleDateString("en-GB", options)
-      .replace(",", "")
-      .replace(" ", " ")
-      .replace(" at", " at");
+    endedAt = formatDate(date);
+    auctionEndDate = endedAt;
   } else {
     const days = Math.floor(Math.random() * 5);
     const hours = Math.floor(Math.random() * 24);
     const minutes = Math.floor(Math.random() * 60);
-    auctionEnds =
-      days > 0
-        ? `${days} days ${hours} hours ${minutes} minutes`
-        : `${hours} hours ${minutes} minutes`;
+    const parts = [];
+    if (days > 0) parts.push(`${days} days`);
+    if (hours > 0 || days > 0) parts.push(`${hours} hours`);
+    parts.push(`${minutes} minutes`);
+
+    auctionEnds = parts.join(" ");
+
+    const now = new Date();
+    const totalMinutes = days * 24 * 60 + hours * 60 + minutes;
+    const endDate = new Date(now.getTime() + totalMinutes * 60 * 1000);
+
+    auctionEndDate = formatDate(endDate);
   }
 
   return {
@@ -45,5 +59,6 @@ export const generateAuctionData = (user: User): Slot => {
     usdEquivalent,
     auctionEnds,
     endedAt,
+    auctionEndDate,
   };
 };

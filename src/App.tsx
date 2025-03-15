@@ -18,6 +18,7 @@ function App() {
         />
         <Route path="/usernames" element={<Usernames />} />
         <Route path="/numbers" element={<h1>numbers</h1>} />
+        <Route path="/username/:username" element={`asdas`} />
       </Routes>
     </Box>
   );

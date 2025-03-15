@@ -10,6 +10,9 @@ export const MainSlice = createSlice({
     changeTab: (state, action: PayloadAction<"usernames" | "numbers">) => {
       state.tab = action.payload;
     },
+    changeNameFilter: (state, action: PayloadAction<string>) => {
+      state.nameFilter = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -28,5 +31,5 @@ export const MainSlice = createSlice({
   },
 });
 
-export const { changeTab } = MainSlice.actions;
+export const { changeTab, changeNameFilter } = MainSlice.actions;
 export default MainSlice.reducer;
