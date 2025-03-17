@@ -19,6 +19,7 @@ export interface Slot {
   endedAt: string | null;
   auctionEndDate: string;
   bidHistory: BidHistory[];
+  slotWinner: BidHistory | null;
 }
 
 export interface MainState {

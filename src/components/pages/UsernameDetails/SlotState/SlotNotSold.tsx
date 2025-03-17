@@ -10,7 +10,7 @@ import {
 import { useAppSelector } from "../../../store/hooks";
 import { ListItems } from "../components/ListItems";
 import { UserInfo } from "../components/UserInfo";
-import { BidHistoryComponent } from "../components/BidHistory";
+import { BidHistoryComponent } from "../components/BidHistoryComponent";
 import { Timer } from "../components/Timer";
 
 export const SlotNotSold = () => {
@@ -21,7 +21,6 @@ export const SlotNotSold = () => {
 
   const {
     user: { username },
-    endedAt,
     auctionEnds,
     bidHistory,
   } = selectedUsernameSlot;
@@ -32,14 +31,15 @@ export const SlotNotSold = () => {
         <Box
           sx={{
             display: "flex",
+            alignItems: "center",
+            paddingLeft: 2,
             [theme.breakpoints.down("xs")]: {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
               textAlign: "center",
+              paddingLeft: 0,
             },
-            alignItems: "center",
-            paddingLeft: 2,
           }}
         >
           <Typography
@@ -161,43 +161,7 @@ export const SlotNotSold = () => {
             </Box>
           </Box>
         </Box>
-        <Box>
-          <Typography variant="h5" fontWeight={"bold"} p={2} mt={2}>
-            Bid History
-          </Typography>
-          <List
-            sx={{
-              width: "100%",
-            }}
-          >
-            <ListSubheader
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                alignItems: "center",
-                height: "40px",
-                borderTopLeftRadius: "10px",
-                borderTopRightRadius: "10px",
-                fontWeight: "bold",
-                backgroundColor: (theme) => theme.palette.primary.dark,
-                color: (theme) => theme.palette.secondary.main,
-                paddingX: 2,
-              }}
-            >
-              <Typography sx={{ textAlign: "left", paddingLeft: 2 }}>
-                Price
-              </Typography>
-              <Typography sx={{ textAlign: "left", paddingLeft: 2 }}>
-                Date
-              </Typography>
-              <Typography sx={{ textAlign: "left", paddingLeft: 2 }}>
-                From
-              </Typography>
-            </ListSubheader>
-
-            <BidHistoryComponent bidHistory={bidHistory} />
-          </List>
-        </Box>
+        <BidHistoryComponent bidHistory={bidHistory} />
       </Box>
     </Box>
   );

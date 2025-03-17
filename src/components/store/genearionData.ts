@@ -77,6 +77,13 @@ export const generateAuctionData = (user: User): Slot => {
   };
 
   const bidHistory = generateBidHistory(minBid);
+  const highestSlot =
+    bidHistory.length > 0
+      ? bidHistory.reduce(
+          (maxBid, bid) => (bid.bid > maxBid.bid ? bid : maxBid),
+          bidHistory[0]
+        )
+      : null;
 
   return {
     user,
@@ -86,5 +93,6 @@ export const generateAuctionData = (user: User): Slot => {
     endedAt,
     auctionEndDate,
     bidHistory,
+    slotWinner: highestSlot,
   };
 };
