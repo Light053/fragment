@@ -5,6 +5,12 @@ export interface User {
   email: string;
 }
 
+export interface BidHistory {
+  bid: number;
+  date: string;
+  from: string;
+}
+
 export interface Slot {
   user: User;
   minBid: number;
@@ -12,6 +18,7 @@ export interface Slot {
   auctionEnds: string;
   endedAt: string | null;
   auctionEndDate: string;
+  bidHistory: BidHistory[];
 }
 
 export interface MainState {
@@ -21,6 +28,7 @@ export interface MainState {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   nameFilter: string;
+  selectedUsernameSlot: Slot | null;
 }
 
 export const initialState: MainState = {
@@ -30,4 +38,5 @@ export const initialState: MainState = {
   status: "idle",
   error: null,
   nameFilter: "",
+  selectedUsernameSlot: null,
 };

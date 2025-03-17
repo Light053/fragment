@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { initialState, User } from "./types";
+import { initialState, Slot, User } from "./types";
 import { generateAuctionData } from "./genearionData";
 import { fetchUsers } from "./actions";
 
@@ -12,6 +12,9 @@ export const MainSlice = createSlice({
     },
     changeNameFilter: (state, action: PayloadAction<string>) => {
       state.nameFilter = action.payload;
+    },
+    changeSelectedUsernameSlot: (state, action: PayloadAction<Slot>) => {
+      state.selectedUsernameSlot = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -31,5 +34,6 @@ export const MainSlice = createSlice({
   },
 });
 
-export const { changeTab, changeNameFilter } = MainSlice.actions;
+export const { changeTab, changeNameFilter, changeSelectedUsernameSlot } =
+  MainSlice.actions;
 export default MainSlice.reducer;

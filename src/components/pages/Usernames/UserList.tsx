@@ -11,6 +11,9 @@ import { UserListItem } from "./UserListItem";
 import { fetchUsers } from "../../store/actions";
 import Filters from "./Filters";
 import { filteringBySaleAndPrice } from "./helpers";
+import { Slot } from "../../store/types";
+import { useNavigate } from "react-router-dom";
+import { changeSelectedUsernameSlot } from "../../store/MainSlice";
 
 export const UserList = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +29,7 @@ export const UserList = () => {
       dispatch(fetchUsers());
     }
   }, [status, dispatch]);
+  const navigate = useNavigate();
 
   const filteredSlots = filteringBySaleAndPrice(
     slots,
@@ -33,6 +37,11 @@ export const UserList = () => {
     filterByPrice,
     nameFilter
   );
+
+  const navigateToUsername = (slot: Slot) => {
+    dispatch(changeSelectedUsernameSlot(slot));
+    navigate(`/usernames/${slot.user.username}`);
+  };
 
   return (
     <Box sx={{ mt: 4, borderRadius: "10px", overflow: "hidden" }}>
@@ -47,7 +56,7 @@ export const UserList = () => {
               display: "flex",
               fontWeight: "bold",
               px: 2,
-              backgroundColor: "#293440",
+              backgroundColor: (theme) => theme.palette.primary.dark,
               borderTopRightRadius: "10px",
               borderTopLeftRadius: "10px",
             }}
@@ -84,15 +93,16 @@ export const UserList = () => {
         }
       >
         {filteredSlots.map((slot) => (
-          <UserListItem
-            user={slot.user}
-            key={slot.user.id}
-            minBid={slot.minBid}
-            usdEquivalent={slot.usdEquivalent}
-            auctionEnds={slot.auctionEnds}
-            endedAt={slot.endedAt}
-            auctionEndDate={slot.auctionEndDate}
-          />
+          <div onClick={() => navigateToUsername(slot)} key={slot.user.id}>
+            <UserListItem
+              user={slot.user}
+              minBid={slot.minBid}
+              usdEquivalent={slot.usdEquivalent}
+              auctionEnds={slot.auctionEnds}
+              endedAt={slot.endedAt}
+              auctionEndDate={slot.auctionEndDate}
+            />
+          </div>
         ))}
       </List>
     </Box>

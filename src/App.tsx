@@ -3,6 +3,7 @@ import "./App.css";
 import { useAppSelector } from "./components/store/hooks";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Usernames from "./components/pages/Usernames/Usernames";
+import { UsernameDetails } from "./components/pages/UsernameDetails/UsernameDetails";
 
 function App() {
   const { tab } = useAppSelector((state) => state.main);
@@ -12,13 +13,11 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            <Link to={tab === "usernames" ? "/usernames" : "/numbers"} />
-          }
+          element={tab === "usernames" ? <Usernames /> : <h1>numbers</h1>}
         />
         <Route path="/usernames" element={<Usernames />} />
         <Route path="/numbers" element={<h1>numbers</h1>} />
-        <Route path="/username/:username" element={`asdas`} />
+        <Route path="/usernames/:username" element={<UsernameDetails />} />
       </Routes>
     </Box>
   );

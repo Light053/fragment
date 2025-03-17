@@ -9,7 +9,6 @@ import {
 import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { User } from "../../store/types";
-import { useNavigate } from "react-router-dom";
 
 export const UserListItem = ({
   user,
@@ -28,11 +27,9 @@ export const UserListItem = ({
 }) => {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-  const navigate = useNavigate();
 
   return (
     <ListItem
-      onClick={() => navigate(`/usernames/${user.username}`)}
       sx={{
         display: "flex",
         px: 2,
@@ -42,7 +39,7 @@ export const UserListItem = ({
           borderBottomLeftRadius: "10px",
           borderBottomRightRadius: "10px",
         },
-        backgroundColor: "#212a33",
+        backgroundColor: (theme) => theme.palette.secondary.dark,
         "&:hover": { backgroundColor: "#293440" },
         cursor: "pointer",
       }}

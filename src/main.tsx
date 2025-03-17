@@ -13,9 +13,11 @@ const theme = createTheme({
     primary: {
       main: "#1976d2",
       contrastText: "#4db2ff",
+      dark: "#293440",
     },
     secondary: {
       main: "#cbd7e5b3",
+      dark: "#212a33",
     },
   },
   shape: {
@@ -23,7 +25,7 @@ const theme = createTheme({
   },
   breakpoints: {
     values: {
-      xs: 0,
+      xs: 380,
       sm: 480,
       md: 900,
       lg: 1200,

@@ -1,9 +1,8 @@
-import { Slot, User } from "./types";
+import { Slot, User, BidHistory } from "./types";
 
 export const generateAuctionData = (user: User): Slot => {
   const minBid = Math.floor(Math.random() * 1000) + 5000;
   const usdEquivalent = `~$${(minBid * 2.87).toLocaleString()}`;
-
   const isEnded = Math.random() < 0.2;
 
   let auctionEnds: string;
@@ -53,6 +52,32 @@ export const generateAuctionData = (user: User): Slot => {
     auctionEndDate = formatDate(endDate);
   }
 
+  const generateBidHistory = (minBid: number): BidHistory[] => {
+    const historyLength = Math.floor(Math.random() * 5) + 1;
+    const history: BidHistory[] = [];
+    let bidAmount = minBid;
+
+    for (let i = 0; i < historyLength; i++) {
+      bidAmount += Math.floor(Math.random() * 500) + 100;
+      const from = "User" + Math.floor(Math.random() * 10);
+
+      const bidDate = new Date();
+      bidDate.setMinutes(
+        bidDate.getMinutes() - Math.floor(Math.random() * 1440)
+      );
+
+      history.push({
+        bid: bidAmount,
+        date: formatDate(bidDate),
+        from,
+      });
+    }
+
+    return history.reverse();
+  };
+
+  const bidHistory = generateBidHistory(minBid);
+
   return {
     user,
     minBid,
@@ -60,5 +85,6 @@ export const generateAuctionData = (user: User): Slot => {
     auctionEnds,
     endedAt,
     auctionEndDate,
+    bidHistory,
   };
 };
