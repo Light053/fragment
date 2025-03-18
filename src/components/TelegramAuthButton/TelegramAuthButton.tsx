@@ -30,7 +30,7 @@ const TelegramAuthButton: React.FC = () => {
 
     const script = document.createElement("script");
     script.src = "https://telegram.org/js/telegram-widget.js?22";
-    script.setAttribute("data-telegram-login", "@AuthBot_3232_bot");
+    script.setAttribute("data-telegram-login", "AuthBot_3232_bot");
     script.setAttribute("data-size", "large");
     script.setAttribute("data-onauth", "TelegramLoginWidget.dataOnauth(user)");
     script.async = true;
