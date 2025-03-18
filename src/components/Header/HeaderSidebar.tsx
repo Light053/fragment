@@ -13,7 +13,7 @@ import { Sidebar } from "../Sidebar/Sidebar";
 import InfoIcon from "@mui/icons-material/Info";
 import PolicyIcon from "@mui/icons-material/Policy";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
-import TelegramIcon from "@mui/icons-material/Telegram";
+
 import DiamondIcon from "@mui/icons-material/Diamond";
 import TelegramAuthButton from "../TelegramAuthButton/TelegramAuthButton";
 
