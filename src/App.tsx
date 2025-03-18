@@ -15,6 +15,7 @@ function App() {
         <Route path="/numbers" element={<Numbers />} />
         <Route path="/usernames/:username" element={<UsernameDetails />} />
         <Route path="/numbers/:number" element={<NumberDetails />} />
+        <Route path="/auth/callback" element={<Usernames />} />
       </Routes>
     </Box>
   );

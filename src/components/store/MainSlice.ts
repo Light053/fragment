@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initialState, NumberActiveFilters, Slot, User } from "./types";
+import {
+  initialState,
+  NumberActiveFilters,
+  Slot,
+  TelegramUser,
+  User,
+} from "./types";
 import { generateAuctionData } from "./genearionData";
 import { fetchUsers } from "./actions";
 import { formatPhoneNumber } from "../pages/Numbers/components/helpers/helpers";
@@ -29,7 +35,20 @@ export const MainSlice = createSlice({
     ) => {
       state.numberActiveFilters = action.payload;
     },
+
+    setTelegramUser: (state, action: PayloadAction<TelegramUser>) => {
+      state.telegramUser = action.payload;
+      state.authStatus = "authenticated";
+      localStorage.setItem("telegram_user", JSON.stringify(action.payload));
+    },
+
+    logout: (state) => {
+      state.telegramUser = null;
+      state.authStatus = "idle";
+      localStorage.removeItem("telegram_user");
+    },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -65,5 +84,8 @@ export const {
   changeNumberFilter,
   changeSelectedNumberSlot,
   setNumberActiveFilters,
+  setTelegramUser,
+  logout,
 } = MainSlice.actions;
+
 export default MainSlice.reducer;

@@ -37,6 +37,16 @@ export interface NumberActiveFilters {
   filterByPrice: "low" | "high";
 }
 
+export interface TelegramUser {
+  id: number;
+  first_name: string;
+  last_name?: string;
+  username?: string;
+  photo_url?: string;
+  auth_date: number;
+  hash: string;
+}
+
 export interface MainState {
   tab: "usernames" | "numbers";
   users: User[];
@@ -48,6 +58,8 @@ export interface MainState {
   selectedNumberSlot: Slot | null;
   numberFilter: string | null;
   numberActiveFilters: NumberActiveFilters;
+  telegramUser: TelegramUser | null;
+  authStatus: "idle" | "authenticated" | "unauthenticated";
 }
 
 export const initialState: MainState = loadState() || {
@@ -61,4 +73,6 @@ export const initialState: MainState = loadState() || {
   selectedNumberSlot: null,
   numberFilter: null,
   numberActiveFilters: { filterBySold: "on_auction", filterByPrice: "low" },
+  telegramUser: null,
+  authStatus: "idle",
 };
