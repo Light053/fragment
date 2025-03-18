@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useAppDispatch } from "../store/hooks";
 import { changeTab } from "../store/MainSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HeaderSidebar } from "./HeaderSidebar";
 
 export const Navbar = () => {
@@ -87,7 +87,7 @@ export const Navbar = () => {
                 }}
                 component="div"
               >
-                FRAGMENT
+                <Link to={"/"}>FRAGMENT</Link>
               </Typography>
             </Box>
 

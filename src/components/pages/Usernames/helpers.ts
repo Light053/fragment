@@ -1,26 +1,34 @@
 import { Slot } from "../../store/types";
-
-export const filteringBySaleAndPrice = (
-  slots: Slot[],
-  filterBySold: string,
-  filterByPrice: string,
-  filterByName: string // Строка для поиска по имени
-) => {
+export const filteringBySaleAndPrice = ({
+  slots,
+  filterBySold,
+  filterByPrice,
+  filterBySearch,
+  searchType,
+}: {
+  slots: Slot[];
+  filterBySold: string;
+  filterByPrice: string;
+  filterBySearch: string;
+  searchType: "username" | "phone";
+}) => {
   let filteredSlots = slots.filter((slot) =>
     filterBySold === "on_auction"
       ? slot.auctionEnds !== "Sold"
       : slot.auctionEnds === "Sold"
   );
 
-  // Фильтрация по имени
-  if (filterByName.trim() !== "") {
-    const nameLower = filterByName.toLowerCase();
-    filteredSlots = filteredSlots.filter((slot) =>
-      slot.user.username.toLowerCase().includes(nameLower)
-    );
+  if (filterBySearch.trim() !== "") {
+    const searchTerm = filterBySearch.toLowerCase();
+    filteredSlots = filteredSlots.filter((slot) => {
+      if (searchType === "username") {
+        return slot.user.username.toLowerCase().includes(searchTerm);
+      } else {
+        return slot.user.phone.toLowerCase().includes(searchTerm);
+      }
+    });
   }
 
-  // Сортировка по цене
   if (filterByPrice === "high") {
     filteredSlots = filteredSlots.sort((a, b) => a.minBid - b.minBid);
   } else {

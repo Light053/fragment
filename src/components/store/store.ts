@@ -7,5 +7,14 @@ export const store = configureStore({
   },
 });
 
+store.subscribe(() => {
+  try {
+    const state = store.getState();
+    localStorage.setItem("reduxState", JSON.stringify(state.main));
+  } catch (e) {
+    console.error("Ошибка при сохранении состояния:", e);
+  }
+});
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

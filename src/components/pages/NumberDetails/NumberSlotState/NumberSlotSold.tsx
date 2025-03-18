@@ -7,25 +7,22 @@ import {
   useTheme,
 } from "@mui/material";
 import { useAppSelector } from "../../../store/hooks";
-import { UserInfo } from "../components/UserInfo";
 import { DiamondOutlined } from "@mui/icons-material";
 import { OwnerShipHistory } from "../../../OwnerShipHistory/OwnerShipHistory";
+import { BidHistoryComponent } from "../../UsernameDetails/components/BidHistoryComponent";
 
-export const SlotSold = () => {
-  const { selectedUsernameSlot } = useAppSelector((state) => state.main);
+export const NumberSlotSold = () => {
+  const { selectedNumberSlot } = useAppSelector((state) => state.main);
 
   const theme = useTheme();
 
-  if (!selectedUsernameSlot) return null;
+  if (!selectedNumberSlot) return null;
 
-  const {
-    user: { username },
-    slotWinner,
-    ownershipHistory,
-  } = selectedUsernameSlot;
+  const { user, slotWinner, ownershipHistory, bidHistory } = selectedNumberSlot;
+  const { phone } = user;
 
   return (
-    <Box marginTop={3} sx={{ paddingLeft: "10px", paddingRight: "10px" }}>
+    <Box mt={3}>
       <Box
         sx={{
           display: "flex",
@@ -50,7 +47,7 @@ export const SlotSold = () => {
           }}
           variant="h5"
           fontWeight={"bold"}
-        >{`${username}.t.me`}</Typography>
+        >{`${phone}`}</Typography>
 
         <Box
           sx={{
@@ -186,6 +183,7 @@ export const SlotSold = () => {
             </List>
           </Box>
         </Box>
+
         <Box
           sx={{
             width: "100%",
@@ -196,13 +194,46 @@ export const SlotSold = () => {
             },
           }}
         >
-          <UserInfo username={username} />
+          <Box
+            sx={{
+              backgroundColor: (theme) => theme.palette.secondary.dark,
+            }}
+            p={2}
+            pb={6}
+            borderRadius={"10px"}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold", fontSize: "14px" }}>
+                Anonymous number
+              </Typography>
+              <Typography
+                fontSize={"13px"}
+                sx={{ color: (theme) => theme.palette.primary.contrastText }}
+              >
+                {phone}
+              </Typography>
+            </Box>
+            <Typography
+              sx={{
+                mt: 1,
+                fontSize: "12px",
+                color: (theme) => theme.palette.secondary.main,
+              }}
+            >
+              This anonymous number can be used to create a Telegram account not
+              tied to a SIM card.
+            </Typography>
+          </Box>
         </Box>
       </Box>
-      <OwnerShipHistory
-        ownershipHistory={ownershipHistory}
-        transferred={false}
-      />
+      <OwnerShipHistory ownershipHistory={ownershipHistory} transferred />
+      <BidHistoryComponent bidHistory={bidHistory} />
     </Box>
   );
 };

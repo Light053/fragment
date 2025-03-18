@@ -5,51 +5,58 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import FilterNumbers from "./components/FilterNumbers";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect, useState } from "react";
-import { UserListItem } from "./UserListItem";
 import { fetchUsers } from "../../store/actions";
-import Filters from "./Filters";
-import { filteringBySaleAndPrice } from "./helpers";
-import { Slot } from "../../store/types";
-import { useNavigate } from "react-router-dom";
-import { changeSelectedUsernameSlot } from "../../store/MainSlice";
+import { NumberListItem } from "./components/NumberListItem";
+import { filteringBySaleAndPrice } from "../Usernames/helpers";
+import { setNumberActiveFilters } from "../../store/MainSlice";
 
-export const UserList = () => {
+export const NumbersList = () => {
+  const { status, slots, numberFilter, numberActiveFilters } = useAppSelector(
+    (state) => state.main
+  );
+
+  const { filterBySold, filterByPrice } = numberActiveFilters;
+
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector((state) => state.main);
   const theme = useTheme();
-  const { slots, nameFilter } = useAppSelector((state) => state.main);
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-  const [filterBySold, setFilterBySold] = useState<string>("on_auction");
-  const [filterByPrice, setFilterByPrice] = useState<string>("low");
 
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchUsers());
     }
   }, [status, dispatch]);
-  const navigate = useNavigate();
 
   const filteredSlots = filteringBySaleAndPrice({
+    searchType: "phone",
+    filterBySearch: numberFilter || "",
     slots,
     filterBySold,
     filterByPrice,
-    searchType: "username",
-    filterBySearch: nameFilter || "",
   });
 
-  const navigateToUsername = (slot: Slot) => {
-    dispatch(changeSelectedUsernameSlot(slot));
-    navigate(`/usernames/${slot.user.username}`);
+  const handleSetFilterByPrice = (value: "low" | "high") => {
+    dispatch(
+      setNumberActiveFilters({ ...numberActiveFilters, filterByPrice: value })
+    );
+  };
+
+  const handleSetFilterBySold = (value: "on_auction" | "sold") => {
+    dispatch(
+      setNumberActiveFilters({ ...numberActiveFilters, filterBySold: value })
+    );
   };
 
   return (
-    <Box sx={{ mt: 4, borderRadius: "10px", overflow: "hidden" }}>
-      <Filters
-        setFilterBySold={setFilterBySold}
-        setFilterByPrice={setFilterByPrice}
+    <Box mt={3}>
+      <FilterNumbers
+        setFilterByPrice={handleSetFilterByPrice}
+        setFilterBySold={handleSetFilterBySold}
       />
+
       <List
         subheader={
           <ListSubheader
@@ -68,7 +75,7 @@ export const UserList = () => {
                 color: (theme) => theme.palette.secondary.main,
               }}
             >
-              Username
+              Anonymous number
             </Box>
             <Box
               sx={{
@@ -94,7 +101,7 @@ export const UserList = () => {
         }
       >
         {filteredSlots.map((slot, index) => (
-          <UserListItem slot={slot} key={index} navigate={navigateToUsername} />
+          <NumberListItem slot={slot} key={index} />
         ))}
       </List>
     </Box>

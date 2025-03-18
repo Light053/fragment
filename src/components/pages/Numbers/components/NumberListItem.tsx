@@ -1,31 +1,36 @@
 import {
-  ListItem,
   Box,
+  ListItem,
   Typography,
-  Link,
-  useTheme,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Slot } from "../../store/types";
-import { Sold } from "../../Sold/Sold";
+import { Slot } from "../../../store/types";
+import { ArrowForwardIos, DiamondOutlined } from "@mui/icons-material";
+import { Sold } from "../../../Sold/Sold";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../store/hooks";
+import { changeSelectedNumberSlot } from "../../../store/MainSlice";
 
-export const UserListItem = ({
-  slot,
-  navigate,
-}: {
-  slot: Slot;
-  navigate: (slot: Slot) => void;
-}) => {
+export const NumberListItem = ({ slot }: { slot: Slot }) => {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
-  const { auctionEndDate, auctionEnds, endedAt, minBid, usdEquivalent, user } =
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  if (!slot) return null;
+
+  const handleNavigate = () => {
+    navigate(`/numbers/${slot.user.phone}`);
+    dispatch(changeSelectedNumberSlot(slot));
+  };
+
+  const { endedAt, auctionEndDate, auctionEnds, minBid, usdEquivalent, user } =
     slot;
 
   return (
     <ListItem
-      onClick={() => navigate(slot)}
+      onClick={handleNavigate}
       sx={{
         display: "flex",
         px: 2,
@@ -60,28 +65,36 @@ export const UserListItem = ({
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
               maxWidth: "150px",
+              fontSize: "14px",
               [theme.breakpoints.down("md")]: { fontSize: "12px" },
             }}
           >
-            @{user.username}
+            {user.phone}
           </Typography>
-          {endedAt && <Sold />}
+
+          {endedAt ? (
+            <Sold />
+          ) : (
+            <Box
+              sx={{
+                width: "fit-content",
+                borderRadius: "5px",
+                fontWeight: "bold",
+                marginLeft: "5px",
+                fontSize: "12px",
+                color: (theme) => theme.palette.secondary.main,
+                backgroundColor: (theme) => theme.palette.primary.dark,
+                padding: "2px 5px",
+                mx: 1,
+                [theme.breakpoints.down("xs")]: {
+                  ml: 0,
+                },
+              }}
+            >
+              Resale
+            </Box>
+          )}
         </Box>
-        <Link
-          href="#"
-          variant="body2"
-          sx={{
-            textDecoration: "none",
-            color: (theme) => theme.palette.primary.contrastText,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            maxWidth: "100px",
-            [theme.breakpoints.down("md")]: { fontSize: "10px" },
-          }}
-        >
-          {`${user.username}.t.me`}
-        </Link>
       </Box>
       <Box
         sx={{
@@ -94,18 +107,20 @@ export const UserListItem = ({
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <DiamondOutlinedIcon
-            sx={{ mr: 1 }}
-            fontSize="small"
+          <DiamondOutlined
+            sx={{ mr: "5px", fontSize: "18px" }}
             color="primary"
           />
-          <Typography variant="body1">{minBid}</Typography>
+          <Typography variant="body1" fontWeight={700} fontSize={"14px"}>
+            {minBid}
+          </Typography>
         </Box>
         <Typography
           variant="body2"
           sx={{
             color: (theme) => theme.palette.secondary.main,
             [theme.breakpoints.down("md")]: { display: "none" },
+            fontSize: "12px",
           }}
         >
           {usdEquivalent}
@@ -149,7 +164,7 @@ export const UserListItem = ({
         </Box>
       )}
       <Box>
-        <ArrowForwardIosIcon fontSize="inherit" color="secondary" />
+        <ArrowForwardIos fontSize="inherit" color="secondary" />
       </Box>
     </ListItem>
   );

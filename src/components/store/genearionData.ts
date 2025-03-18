@@ -1,4 +1,4 @@
-import { Slot, User, BidHistory } from "./types";
+import { Slot, User, BidHistory, OwnershipHistory } from "./types";
 
 export const generateAuctionData = (user: User): Slot => {
   const minBid = Math.floor(Math.random() * 1000) + 5000;
@@ -85,6 +85,28 @@ export const generateAuctionData = (user: User): Slot => {
         )
       : null;
 
+  const generateOwnershipHistory = (
+    bidHistory: BidHistory[]
+  ): OwnershipHistory[] => {
+    if (bidHistory.length === 0) return [];
+
+    const history: OwnershipHistory[] = [];
+    const ownershipCount = Math.floor(Math.random() * bidHistory.length) + 1;
+    const selectedBids = bidHistory.slice(-ownershipCount);
+
+    selectedBids.forEach((bid) => {
+      history.push({
+        date: bid.date,
+        buyer: bid.from,
+        salePrice: `${bid.bid.toLocaleString()}`,
+      });
+    });
+
+    return history;
+  };
+
+  const ownershipHistory = generateOwnershipHistory(bidHistory);
+
   return {
     user,
     minBid,
@@ -93,6 +115,7 @@ export const generateAuctionData = (user: User): Slot => {
     endedAt,
     auctionEndDate,
     bidHistory,
+    ownershipHistory,
     slotWinner: highestSlot,
   };
 };

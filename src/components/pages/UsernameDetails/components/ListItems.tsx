@@ -119,16 +119,7 @@ export const ListItems = ({
             color: "#1976d2",
           },
         }}
-      >
-        <Typography
-          sx={{
-            fontSize: "13px",
-            color: (theme) => theme.palette.primary.contrastText,
-          }}
-        >
-          How does this work?
-        </Typography>
-      </ListItem>
+      ></ListItem>
     </>
   );
 };
