@@ -7,13 +7,17 @@ const TelegramAuthButton: React.FC = () => {
     script.async = true;
     script.setAttribute("data-telegram-login", "AuthBot_3232_bot");
     script.setAttribute("data-size", "large");
-    script.setAttribute("data-radius", "14");
+    script.setAttribute("data-radius", "20");
     script.setAttribute(
       "data-auth-url",
       "https://fragment-six.vercel.app/auth/callback"
     );
-    script.setAttribute("data-request-access", "write");
-    document.getElementById("telegram-button-container")?.appendChild(script);
+
+    const container = document.getElementById("telegram-button-container");
+    if (container) {
+      container.innerHTML = "";
+      container.appendChild(script);
+    }
   }, []);
 
   return <div id="telegram-button-container"></div>;
