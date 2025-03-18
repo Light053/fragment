@@ -8,9 +8,7 @@ const REDIRECT_URI = "https://fragment-six.vercel.app/auth/callback";
 
 const TelegramAuthButton: React.FC = () => {
   const handleLogin = () => {
-    window.location.href = `https://oauth.telegram.org/auth?bot_id=${TELEGRAM_BOT_ID}&origin=${encodeURIComponent(
-      window.location.origin
-    )}&embed=1&request_access=write&return_to=${encodeURIComponent(
+    window.location.href = `https://oauth.telegram.org/auth?bot_id=${TELEGRAM_BOT_ID}&return_to=${encodeURIComponent(
       REDIRECT_URI
     )}`;
   };
