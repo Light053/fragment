@@ -15,6 +15,7 @@ import PolicyIcon from "@mui/icons-material/Policy";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import DiamondIcon from "@mui/icons-material/Diamond";
+import TelegramAuthButton from "../TelegramAuthButton/TelegramAuthButton";
 
 export const HeaderSidebar = ({
   open,
@@ -94,20 +95,7 @@ export const HeaderSidebar = ({
               marginTop: 2,
             }}
           >
-            <Button
-              variant="contained"
-              startIcon={<TelegramIcon />}
-              sx={{
-                backgroundColor: "#293440",
-                color: "white",
-                textTransform: "none",
-                fontWeight: "bold",
-                width: "100%",
-                boxShadow: "none",
-              }}
-            >
-              Connect Telegram
-            </Button>
+            <TelegramAuthButton />
 
             <Button
               variant="contained"
