@@ -19,6 +19,7 @@ import { useAppDispatch } from "../store/hooks";
 import { changeTab } from "../store/MainSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderSidebar } from "./HeaderSidebar";
+import TelegramAuthButton from "../TelegramAuthButton/TelegramAuthButton";
 
 export const Navbar = () => {
   const [value, setValue] = React.useState<"usernames" | "numbers">(
@@ -145,19 +146,7 @@ export const Navbar = () => {
                 <MenuIcon />
               </IconButton>
             ) : (
-              <Button
-                variant="contained"
-                startIcon={<TelegramIcon />}
-                sx={{
-                  backgroundColor: "#293440",
-                  color: "white",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  boxShadow: "none",
-                }}
-              >
-                Connect Telegram
-              </Button>
+              <TelegramAuthButton />
             )}
 
             <Button
