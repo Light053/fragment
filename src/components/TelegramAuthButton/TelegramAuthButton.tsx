@@ -2,13 +2,13 @@ import { Button } from "@mui/material";
 import React from "react";
 import TelegramIcon from "@mui/icons-material/Telegram";
 
-const TELEGRAM_BOT_USERNAME = "AuthBot_3232_bot";
+const TELEGRAM_BOT_ID = "7857873692:AAH5dsbPp2CCqM9UiAhhRG3XKgFgqHfl_Ko";
 
 const REDIRECT_URI = "https://fragment-six.vercel.app/auth/callback";
 
 const TelegramAuthButton: React.FC = () => {
   const handleLogin = () => {
-    window.location.href = `https://oauth.telegram.org/auth?bot_id=${TELEGRAM_BOT_USERNAME}&origin=${encodeURIComponent(
+    window.location.href = `https://oauth.telegram.org/auth?bot_id=${TELEGRAM_BOT_ID}&origin=${encodeURIComponent(
       window.location.origin
     )}&embed=1&request_access=write&return_to=${encodeURIComponent(
       REDIRECT_URI
