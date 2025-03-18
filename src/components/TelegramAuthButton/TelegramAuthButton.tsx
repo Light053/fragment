@@ -1,36 +1,22 @@
-import { Button } from "@mui/material";
-import React from "react";
-import TelegramIcon from "@mui/icons-material/Telegram";
-
-const TELEGRAM_BOT_ID = "7857873692:AAH5dsbPp2CCqM9UiAhhRG3XKgFgqHfl_Ko";
-
-const REDIRECT_URI = "https://fragment-six.vercel.app/auth/callback";
+import React, { useEffect } from "react";
 
 const TelegramAuthButton: React.FC = () => {
-  const handleLogin = () => {
-    window.location.href = `https://oauth.telegram.org/auth?bot_id=${TELEGRAM_BOT_ID}&origin=${encodeURIComponent(
-      window.location.origin
-    )}&embed=1&request_access=write&return_to=${encodeURIComponent(
-      REDIRECT_URI
-    )}`;
-  };
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://telegram.org/js/telegram-widget.js?22";
+    script.async = true;
+    script.setAttribute("data-telegram-login", "AuthBot_3232_bot");
+    script.setAttribute("data-size", "large");
+    script.setAttribute("data-radius", "14");
+    script.setAttribute(
+      "data-auth-url",
+      "https://fragment-six.vercel.app/auth/callback"
+    );
+    script.setAttribute("data-request-access", "write");
+    document.getElementById("telegram-button-container")?.appendChild(script);
+  }, []);
 
-  return (
-    <Button
-      variant="contained"
-      startIcon={<TelegramIcon />}
-      sx={{
-        backgroundColor: "#293440",
-        color: "white",
-        textTransform: "none",
-        fontWeight: "bold",
-        boxShadow: "none",
-      }}
-      onClick={handleLogin}
-    >
-      Connect Telegram
-    </Button>
-  );
+  return <div id="telegram-button-container"></div>;
 };
 
 export default TelegramAuthButton;
