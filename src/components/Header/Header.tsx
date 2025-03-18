@@ -3,7 +3,6 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import TelegramIcon from "@mui/icons-material/Telegram";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoIcon from "../../assets/logoIcon.svg";
