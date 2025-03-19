@@ -83,18 +83,7 @@ export const HeaderSidebar = ({
             Connect TON <br /> to view your bids and assets
           </Typography>
 
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex !important",
-              height: "50px",
-              justifyContent: "center",
-            }}
-          >
-            <TonConnectButton
-              style={{ width: "100%", display: "flex !important" }}
-            />
-          </Box>
+          {open && <TonConnectButton />}
         </Box>
       </Box>
     </Sidebar>

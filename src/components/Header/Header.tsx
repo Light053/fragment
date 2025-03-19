@@ -30,7 +30,6 @@ export const Navbar = () => {
   const navigation = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
@@ -216,13 +215,16 @@ export const Navbar = () => {
               </Menu>
             </Box>
 
-            <Box
-              sx={{
-                display: `${isSmall ? "none" : "flex"}`,
-              }}
-            >
-              <TonConnectButton />
-            </Box>
+            {!open && (
+              <Box
+                sx={{
+                  [theme.breakpoints.down("sm")]: { display: "none" },
+                  [theme.breakpoints.up("sm")]: { display: "flex" },
+                }}
+              >
+                <TonConnectButton />
+              </Box>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
