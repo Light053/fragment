@@ -15,7 +15,6 @@ import PolicyIcon from "@mui/icons-material/Policy";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 
 import DiamondIcon from "@mui/icons-material/Diamond";
-import TelegramAuthButton from "../TelegramAuthButton/TelegramAuthButton";
 
 export const HeaderSidebar = ({
   open,
@@ -83,7 +82,7 @@ export const HeaderSidebar = ({
           }}
         >
           <Typography>
-            Connect TON and Telegram <br /> to view your bids and assets
+            Connect TON <br /> to view your bids and assets
           </Typography>
 
           <Box
@@ -95,8 +94,6 @@ export const HeaderSidebar = ({
               marginTop: 2,
             }}
           >
-            <TelegramAuthButton />
-
             <Button
               variant="contained"
               startIcon={<DiamondIcon />}

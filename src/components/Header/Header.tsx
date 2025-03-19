@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -13,12 +13,14 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
+  Avatar,
+  Menu,
+  MenuItem,
 } from "@mui/material";
-import { useAppDispatch } from "../store/hooks";
-import { changeTab } from "../store/MainSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { changeTab, setTelegramUser } from "../store/MainSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { HeaderSidebar } from "./HeaderSidebar";
-import TelegramAuthButton from "../TelegramAuthButton/TelegramAuthButton";
 
 export const Navbar = () => {
   const [value, setValue] = React.useState<"usernames" | "numbers">(
@@ -30,6 +32,7 @@ export const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const { telegramUser } = useAppSelector((state) => state.main);
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
@@ -38,6 +41,22 @@ export const Navbar = () => {
     navigation(`/${newValue}`);
     setValue(newValue);
     dispatch(changeTab(newValue));
+  };
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("telegram_user");
+    dispatch(setTelegramUser(null));
+    navigation("/auth");
+    handleClose();
   };
 
   return (
@@ -140,13 +159,51 @@ export const Navbar = () => {
               flexDirection: `${isMobile ? "row-reverse" : "row"}`,
             }}
           >
-            {isMobile ? (
+            {isMobile && (
               <IconButton onClick={() => setOpen(true)} sx={{ color: "white" }}>
                 <MenuIcon />
               </IconButton>
-            ) : (
-              <TelegramAuthButton />
             )}
+
+            <Box display="flex" alignItems="center">
+              <Avatar
+                alt="avatar"
+                src={telegramUser?.photo_url}
+                onClick={handleClick}
+              />
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                sx={{
+                  "& .MuiPaper-root": {
+                    backgroundColor: theme.palette.primary.dark,
+                    borderRadius: 1,
+                    boxShadow: `0 4px 8px ${theme.palette.primary.dark}`,
+                    mt: 1,
+                    px: 3,
+                  },
+                }}
+              >
+                <MenuItem
+                  onClick={handleLogout}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: theme.palette.primary.dark,
+                    },
+                    height: "40px",
+                  }}
+                >
+                  <Typography
+                    variant="body1"
+                    color={theme.palette.primary.contrastText}
+                    sx={{ fontWeight: 600 }}
+                  >
+                    Logout
+                  </Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
 
             <Button
               variant="contained"

@@ -36,7 +36,7 @@ export const MainSlice = createSlice({
       state.numberActiveFilters = action.payload;
     },
 
-    setTelegramUser: (state, action: PayloadAction<TelegramUser>) => {
+    setTelegramUser: (state, action: PayloadAction<TelegramUser | null>) => {
       state.telegramUser = action.payload;
       state.authStatus = "authenticated";
       localStorage.setItem("telegram_user", JSON.stringify(action.payload));
