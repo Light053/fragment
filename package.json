@@ -16,9 +16,10 @@
     "@mui/material": "^6.4.7",
     "@reduxjs/toolkit": "^2.6.1",
     "@telegram-auth/react": "^1.0.4",
+    "@tonconnect/ui-react": "^2.0.12",
     "@vitejs/plugin-react": "^4.3.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.3.0",
     "vite-plugin-html": "^3.2.2"

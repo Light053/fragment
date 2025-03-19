@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import DiamondIcon from "@mui/icons-material/Diamond";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoIcon from "../../assets/logoIcon.svg";
 import {
@@ -21,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { changeTab, setTelegramUser } from "../store/MainSlice";
 import { useNavigate } from "react-router-dom";
 import { HeaderSidebar } from "./HeaderSidebar";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 export const Navbar = () => {
   const { telegramUser, tab } = useAppSelector((state) => state.main);
@@ -93,9 +92,10 @@ export const Navbar = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
+
                 justifyContent: "flex-start",
                 minWidth: "calc((100vw - 760px) / 2)",
-                marginLeft: `${isMobile ? "-100px" : "0"}`,
+                marginLeft: `${isMobile ? "-90px" : ""}`,
               }}
             >
               <img
@@ -216,19 +216,13 @@ export const Navbar = () => {
               </Menu>
             </Box>
 
-            <Button
-              variant="contained"
-              startIcon={<DiamondIcon />}
+            <Box
               sx={{
-                backgroundColor: "#007BFF",
-                color: "white",
-                textTransform: "none",
-                fontWeight: "bold",
                 display: `${isSmall ? "none" : "flex"}`,
               }}
             >
-              Connect TON
-            </Button>
+              <TonConnectButton />
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>

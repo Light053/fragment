@@ -29,7 +29,7 @@ function App() {
         <Route
           path="/*"
           element={
-            isAuthenticated ? (
+            true ? (
               <Routes>
                 <Route path="/usernames" element={<Usernames />} />
                 <Route path="/numbers" element={<Numbers />} />

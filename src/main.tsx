@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "./components/store/store.ts";
 import { BrowserRouter } from "react-router-dom";
 import { Navbar } from "./components/Header/Header.tsx";
+import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 const theme = createTheme({
   palette: {
@@ -38,10 +39,12 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <BrowserRouter>
-          <Navbar />
-          <App />
-        </BrowserRouter>
+        <TonConnectUIProvider manifestUrl="https://80bb-45-134-219-18.ngrok-free.app/tonconnect-manifest.json">
+          <BrowserRouter>
+            <Navbar />
+            <App />
+          </BrowserRouter>
+        </TonConnectUIProvider>
       </Provider>
     </ThemeProvider>
   </StrictMode>

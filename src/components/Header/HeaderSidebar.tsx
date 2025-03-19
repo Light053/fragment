@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   IconButton,
   List,
   ListItem,
@@ -13,8 +12,7 @@ import { Sidebar } from "../Sidebar/Sidebar";
 import InfoIcon from "@mui/icons-material/Info";
 import PolicyIcon from "@mui/icons-material/Policy";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
-
-import DiamondIcon from "@mui/icons-material/Diamond";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 export const HeaderSidebar = ({
   open,
@@ -87,26 +85,15 @@ export const HeaderSidebar = ({
 
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
               width: "100%",
-              gap: 1,
-              marginTop: 2,
+              display: "flex !important",
+              height: "50px",
+              justifyContent: "center",
             }}
           >
-            <Button
-              variant="contained"
-              startIcon={<DiamondIcon />}
-              sx={{
-                backgroundColor: "#007BFF",
-                color: "white",
-                textTransform: "none",
-                width: "100%",
-                fontWeight: "bold",
-              }}
-            >
-              Connect TON
-            </Button>
+            <TonConnectButton
+              style={{ width: "100%", display: "flex !important" }}
+            />
           </Box>
         </Box>
       </Box>
