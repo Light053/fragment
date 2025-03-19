@@ -1,5 +1,5 @@
 import { LoginButton } from "@telegram-auth/react";
-import React, { useEffect } from "react";
+import React from "react";
 
 const TelegramAuthButton: React.FC = () => {
   return (
