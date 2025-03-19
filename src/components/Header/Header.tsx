@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { changeTab, setTelegramUser } from "../store/MainSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { HeaderSidebar } from "./HeaderSidebar";
 
 export const Navbar = () => {
