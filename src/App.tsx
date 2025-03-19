@@ -8,9 +8,14 @@ import { NumberDetails } from "./components/pages/NumberDetails/NumberDetails";
 
 import { AuthPage } from "./components/pages/Auth/Auth";
 import AuthCallback from "./components/pages/AuthCallback/AuthCallback";
+import { useState } from "react";
 
 function App() {
-  const isAuthenticated = localStorage.getItem("telegram_user") != null;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  setTimeout(() => {
+    const isAuthenticated = localStorage.getItem("telegram_user") != null;
+    setIsAuthenticated(isAuthenticated);
+  }, 500);
 
   return (
     <Box sx={{ maxWidth: "720px", width: "100%", margin: "0 auto" }}>
