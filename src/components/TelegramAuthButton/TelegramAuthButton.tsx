@@ -10,7 +10,7 @@ const TelegramAuthButton: React.FC = () => {
     script.setAttribute("data-radius", "14");
     script.setAttribute(
       "data-auth-url",
-      "https://fragment-six.vercel.app/auth/callback"
+      "https://d5a1-45-134-219-18.ngrok-free.app/auth/callback"
     );
     script.setAttribute("data-request-access", "write");
     document.getElementById("telegram-button-container")?.appendChild(script);

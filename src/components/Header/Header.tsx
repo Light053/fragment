@@ -23,16 +23,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { HeaderSidebar } from "./HeaderSidebar";
 
 export const Navbar = () => {
-  const [value, setValue] = React.useState<"usernames" | "numbers">(
-    "usernames"
-  );
+  const { telegramUser, tab } = useAppSelector((state) => state.main);
+
+  const [value, setValue] = React.useState<"usernames" | "numbers">(tab);
   const [open, setOpen] = React.useState(false);
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  const { telegramUser } = useAppSelector((state) => state.main);
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
@@ -57,6 +56,12 @@ export const Navbar = () => {
     dispatch(setTelegramUser(null));
     navigation("/auth");
     handleClose();
+  };
+
+  const goToMain = () => {
+    navigation(`/`);
+    setValue("usernames");
+    dispatch(changeTab("usernames"));
   };
 
   return (
@@ -106,7 +111,13 @@ export const Navbar = () => {
                 }}
                 component="div"
               >
-                <Link to={"/"}>FRAGMENT</Link>
+                <Typography
+                  variant="h6"
+                  sx={{ cursor: "pointer" }}
+                  onClick={goToMain}
+                >
+                  FRAGMENT
+                </Typography>
               </Typography>
             </Box>
 
