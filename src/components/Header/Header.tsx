@@ -30,7 +30,7 @@ export const Navbar = () => {
   const navigation = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const customWidth = useMediaQuery(theme.breakpoints.down("custom"));
+  const customWidth = useMediaQuery("(max-width: 560px)");
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
