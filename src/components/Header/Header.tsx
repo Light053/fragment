@@ -11,25 +11,26 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
-  Avatar,
-  Menu,
-  MenuItem,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { changeTab, setTelegramUser } from "../store/MainSlice";
+import { changeTab } from "../store/MainSlice";
 import { useNavigate } from "react-router-dom";
 import { HeaderSidebar } from "./HeaderSidebar";
 import { TonConnectButton } from "@tonconnect/ui-react";
+import TelegramAuthButton from "../TelegramAuthButton/TelegramAuthButton";
+import { AuthMenu } from "./AuthMenu";
 
 export const Navbar = () => {
   const { telegramUser, tab } = useAppSelector((state) => state.main);
 
   const [value, setValue] = React.useState<"usernames" | "numbers">(tab);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   const [open, setOpen] = React.useState(false);
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const customWidth = useMediaQuery(theme.breakpoints.down("custom"));
 
   const handleTabChange = (
     _event: React.SyntheticEvent,
@@ -40,27 +41,19 @@ export const Navbar = () => {
     dispatch(changeTab(newValue));
   };
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("telegram_user");
-    dispatch(setTelegramUser(null));
-    navigation("/auth");
-    handleClose();
-  };
-
   const goToMain = () => {
     navigation(`/`);
     setValue("usernames");
     dispatch(changeTab("usernames"));
   };
+
+  React.useEffect(() => {
+    if (telegramUser) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }, [telegramUser]);
 
   return (
     <>
@@ -175,56 +168,28 @@ export const Navbar = () => {
               </IconButton>
             )}
 
-            <Box display="flex" alignItems="center">
-              <Avatar
-                alt="avatar"
-                src={telegramUser?.photo_url}
-                onClick={handleClick}
-              />
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                sx={{
-                  "& .MuiPaper-root": {
-                    backgroundColor: theme.palette.primary.dark,
-                    borderRadius: 1,
-                    boxShadow: `0 4px 8px ${theme.palette.primary.dark}`,
-                    mt: 1,
-                    px: 3,
-                  },
-                }}
-              >
-                <MenuItem
-                  onClick={handleLogout}
+            {isAuth && <AuthMenu openSidebar={open} />}
+
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+              }}
+            >
+              {!isAuth && !customWidth && <TelegramAuthButton />}
+
+              {!open && (
+                <Box
                   sx={{
-                    "&:hover": {
-                      backgroundColor: theme.palette.primary.dark,
-                    },
-                    height: "40px",
+                    [theme.breakpoints.down("md")]: { display: "none" },
+                    [theme.breakpoints.up("md")]: { display: "flex" },
                   }}
                 >
-                  <Typography
-                    variant="body1"
-                    color={theme.palette.primary.contrastText}
-                    sx={{ fontWeight: 600 }}
-                  >
-                    Logout
-                  </Typography>
-                </MenuItem>
-              </Menu>
+                  <TonConnectButton />
+                </Box>
+              )}
             </Box>
-
-            {!open && (
-              <Box
-                sx={{
-                  [theme.breakpoints.down("sm")]: { display: "none" },
-                  [theme.breakpoints.up("sm")]: { display: "flex" },
-                }}
-              >
-                <TonConnectButton />
-              </Box>
-            )}
           </Box>
         </Toolbar>
       </AppBar>

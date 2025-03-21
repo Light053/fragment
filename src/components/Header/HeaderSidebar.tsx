@@ -13,6 +13,10 @@ import InfoIcon from "@mui/icons-material/Info";
 import PolicyIcon from "@mui/icons-material/Policy";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { TonConnectButton } from "@tonconnect/ui-react";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "../store/hooks";
+import { AuthMenu } from "./AuthMenu";
+import TelegramAuthButton from "../TelegramAuthButton/TelegramAuthButton";
 
 export const HeaderSidebar = ({
   open,
@@ -26,6 +30,17 @@ export const HeaderSidebar = ({
     { text: "Terms", icon: <FactCheckIcon /> },
     { text: "Privacy Policy", icon: <PolicyIcon /> },
   ];
+
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const { telegramUser } = useAppSelector((state) => state.main);
+
+  useEffect(() => {
+    if (telegramUser) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }, [telegramUser]);
 
   return (
     <Sidebar open={open} onClose={onClose} anchor="right">
@@ -82,7 +97,9 @@ export const HeaderSidebar = ({
           <Typography>
             Connect TON <br /> to view your bids and assets
           </Typography>
-
+          <Box mt={1} />
+          {!isAuth && <TelegramAuthButton />}
+          {isAuth && <AuthMenu openSidebar />}
           {open && <TonConnectButton />}
         </Box>
       </Box>
